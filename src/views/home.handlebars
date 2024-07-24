@@ -1,0 +1,62 @@
+
+<div class="container">
+    <div class="row justify-content-center mt-5">
+        <div class="col-12 text-center">
+            <h1>Catalogo de productos</h1>
+            <br> <br>
+            <a href="carts/{{cart}}">
+            <button style="width: 5rem; margin: 1rem;" type="button" role="link" class="btn btn-warning">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+            </svg>
+        Carrito
+    </button></a>
+            
+        </div>
+    </div>
+    <div class="row">
+        <form class="row" action="/api/carts/addProduct" method="post">
+        <input type="hidden" id="{{cart}}" name="cart" value="{{cart}}">
+        {{#each products}}
+            <div class="col-sm-4">
+                <div class="card" style="margin: 1rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{this.tittle}} </h5>
+                        <p class="card-text">{{this.description}}</p>
+                        <p class="card-text">${{this.price}}</p>
+                    </div>
+                    <button id="{{this._id}}" name="product" value="{{this._id}}" style="width: 3rem; margin: 1rem;" type="sumbit" class="btn btn-primary addButton"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+                            </svg>
+                    </button>
+                </div>
+            </div>
+    {{/each}}
+    </form>
+    </div>
+    <br>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <li class="page-item">
+                {{#if hasPrevPage}}
+                    <a class="page-link" href="/products?page={{prevPage}}">Anterior</a>
+                {{/if}}
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+                {{#if hasNextPage}}
+                    <a class="page-link" href="/products?page={{nextPage}}">Siguiente</a>
+                {{/if}}
+            </li>
+        </ul>
+    </nav>
+    <br>
+    <p>Productos encontrados: {{payload}}</p>
+    <p>Pagina {{currentPage}} de {{totalPages}} </p>
+    
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.min.js"></script>
