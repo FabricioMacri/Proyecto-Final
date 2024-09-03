@@ -17,7 +17,7 @@ router.get("/products", async (req, res) => {
    const query = req.query.query;
    const sort = req.query.sort;
    const page = req.query.page || 1; 
-   let limit = 9;
+   let limit = 12;
 
    try {
        
@@ -36,7 +36,8 @@ router.get("/products", async (req, res) => {
       if(sort == 'DESC') {
          query.sort([['category', 'desc']]);
       }
-      res.render("home", {
+
+      const pageInfo = {
          products,
          status:"success",
          payload: data.totalDocs,
@@ -46,8 +47,12 @@ router.get("/products", async (req, res) => {
          nextPage: data.nextPage,
          currentPage: data.page,
          totalPages: data.totalPages,
-         cart: await req.session.user.cart
-      });
+      }
+      if(req.session.login) {
+         pageInfo.cart = await req.session.user.cart;
+      }
+
+      res.render("shop", pageInfo);
        
    } catch (error) {
       console.log("Error: " + error)

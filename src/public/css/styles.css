@@ -1,0 +1,23 @@
+.cardShadow {
+    transition: transform 0.2s; /* Smooth transition for scaling */
+    margin-top: 2rem;
+}
+  
+.cardShadow:hover {
+    animation: shadowAnimation 1s infinite;
+    transform: scale(1.05); /* Slightly scale up the card on hover */
+}
+
+.cardsPromo {
+
+    cursor: pointer;
+    transition: transform 0.2s; /* Smooth transition for scaling */
+    width: 12rem; 
+    height: 15rem; 
+    margin: 4rem;
+}
+.cardsPromo:hover {
+    animation: shadowAnimation 1s infinite;
+    transform: scale(1.05); /* Slightly scale up the card on hover */
+}
+

@@ -1,62 +1,131 @@
 
-<div class="container">
-    <div class="row justify-content-center mt-5">
-        <div class="col-12 text-center">
-            <h1>Catalogo de productos</h1>
-            <br> <br>
-            <a href="carts/{{cart}}">
-            <button style="width: 5rem; margin: 1rem;" type="button" role="link" class="btn btn-warning">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-6 h-6">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
-            </svg>
-        Carrito
-    </button></a>
-            
-        </div>
-    </div>
-    <div class="row">
-        <form class="row" action="/api/carts/addProduct" method="post">
-        <input type="hidden" id="{{cart}}" name="cart" value="{{cart}}">
-        {{#each products}}
-            <div class="col-sm-4">
-                <div class="card" style="margin: 1rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">{{this.tittle}} </h5>
-                        <p class="card-text">{{this.description}}</p>
-                        <p class="card-text">${{this.price}}</p>
-                    </div>
-                    <button id="{{this._id}}" name="product" value="{{this._id}}" style="width: 3rem; margin: 1rem;" type="sumbit" class="btn btn-primary addButton"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-6 h-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
-                            </svg>
-                    </button>
+<header>
+    <div class="container bg-ligth">
+        <nav class="navbar navbar-light">
+            <div class="container-fluid">
+                <a class="navbar-brand text-white">
+                    <img style="border-radius: 50%;" src="/img/logo.png" alt="" width="30" height="30" 
+                        class="d-inline-block align-text-top">
+                    Key Ring's Shop
+                </a>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button class="btn btn-info me-md-2 text-white" type="button">Ingresar</button>
+                    <button class="btn btn-info text-white" type="button">Registrarse</button>
                 </div>
             </div>
-    {{/each}}
-    </form>
+        </nav>
+        <br> <br>
+        <div class="row justify-content-center">
+            <h1 class="text-white text-center">¡Tu llavero necesita estilo!</h1>
+            <h5 class="text-white text-center">Econtralo acá</h5>
+            <br>
+            <br>
+            <div class="col text-center">
+                <a href="/views/products">
+                <button class="btn btn-info btn-lg text-white cardShadow" type="button">TIENDA</button>
+                </a>
+            </div>
+        </div>
     </div>
-    <br>
-    <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-center">
-            <li class="page-item">
-                {{#if hasPrevPage}}
-                    <a class="page-link" href="/products?page={{prevPage}}">Anterior</a>
-                {{/if}}
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-                {{#if hasNextPage}}
-                    <a class="page-link" href="/products?page={{nextPage}}">Siguiente</a>
-                {{/if}}
-            </li>
-        </ul>
-    </nav>
-    <br>
-    <p>Productos encontrados: {{payload}}</p>
-    <p>Pagina {{currentPage}} de {{totalPages}} </p>
-    
+</header>
+<div class="container-xxl" >
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-4 cardsPromo">
+                        <div class="card cardShadow">
+                            <img src="/img/products/Llavero_IronMan.png" class="card-img-top">
+                            <div class="card-body">
+                                <h5 class="card-title text-center">Iron Man</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 cardsPromo">
+                        <div class="card cardShadow">
+                            <img src="/img/products/groot.jpg" class="card-img-top">
+                            <div class="card-body">
+                                <h5 class="card-title text-center">Groot</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 cardsPromo">
+                        <div class="card cardShadow">
+                            <img src="/img/products/guantelete.jpg" class="card-img-top">
+                            <div class="card-body">
+                                <h5 class="card-title text-center">Guantelete</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-4 cardsPromo">
+                        <div class="card cardShadow">
+                            <img src="/img/products/ford.png" class="card-img-top">
+                            <div class="card-body">
+                                <h5 class="card-title text-center">Ford</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 cardsPromo">
+                        <div class="card cardShadow">
+                            <img src="/img/products/volkswagen.jpg" class="card-img-top">
+                            <div class="card-body">
+                                <h5 class="card-title text-center">VolksWagen</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 cardsPromo">
+                        <div class="card cardShadow">
+                            <img src="/img/products/renault.jpg" class="card-img-top">
+                            <div class="card-body">
+                                <h5 class="card-title text-center">Renault</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-4 cardsPromo">
+                        <div class="card cardShadow">
+                            <img src="/img/products/river.jpeg" class="card-img-top">
+                            <div class="card-body">
+                                <h5 class="card-title text-center">River</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 cardsPromo">
+                        <div class="card cardShadow">
+                            <img src="/img/products/boca.jpg" class="card-img-top">
+                            <div class="card-body">
+                                <h5 class="card-title text-center">Boca</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 cardsPromo">
+                        <div class="card cardShadow">
+                            <img src="/img/products/independiente.png" class="card-img-top">
+                            <div class="card-body">
+                                <h5 class="card-title text-center">Independiente</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        </a>
+    </div>
 </div>
-
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.min.js"></script>
