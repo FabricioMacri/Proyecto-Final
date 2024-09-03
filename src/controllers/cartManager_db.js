@@ -29,8 +29,7 @@ class CartManager {
     async agregarProductoAlCarrito(cartId, productId, quantity = 1) {
         try {
             const carrito = await this.getCarritoById(cartId);
-            const existeProducto = carrito.products.find(item => item.product._id.toString() == productId);
-            console.log(existeProducto);
+            const existeProducto = carrito.products.find(item => item._id.toString() == productId);
 
             if (existeProducto) {
                 existeProducto.quantity += quantity;

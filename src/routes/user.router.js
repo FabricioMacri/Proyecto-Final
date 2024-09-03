@@ -9,6 +9,10 @@ const { createHash } = require("../utils/hashbcrypt.js");
 const ErrorHandler = require('../utils/error/errorHandler.js');
 const errorHandler = new ErrorHandler();
 
+router.get('/instrucciones', async (req, res) => {
+
+    res.send('Esta ruta esta en proceso');
+})
 
 //Register
 router.post("/register", async (req, res) => {

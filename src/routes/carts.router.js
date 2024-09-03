@@ -21,7 +21,7 @@ router.get("/", async (req, res) => {
                 req.session.user.cart = carrito;
             }
         }
-        res.redirect("/views/products");
+        res.redirect("/products");
     } catch (error) {
         console.error("Error al crear un nuevo carrito", error);
         res.status(500).json({ error: "Error interno del servidor" });
@@ -59,7 +59,7 @@ router.post("/:cid/purchase", async (req, res) => {
 
         if (ticket) {
             console.log("Ticket aprobado!");
-            res.redirect("/views/products");
+            res.redirect("/products");
         } else {
             console.log("Hubo problemas con el ticket ");
             res.status(400).json({mensaje : "Hubo problemas con el ticket"});
@@ -78,8 +78,9 @@ router.post("/addProduct", async (req, res) => {
     const quantity = req.body.quantity || 1;
 
     try {
+        console.log("cartId: " + cartId + " - productId: " + productId +" - quantity: " + quantity);
         const actualizarCarrito = await cartManager.agregarProductoAlCarrito(cartId, productId, quantity);
-        res.redirect("/views/products");
+        res.redirect("/products");
     } catch (error) {
         console.error("Error al agregar producto al carrito", error);
         res.status(500).json({ error: "Error interno del servidor" });

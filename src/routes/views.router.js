@@ -14,10 +14,12 @@ router.get('/chat', (req, res) => {
 
 router.get("/products", async (req, res) => {
 
+   if(!req.session.login) res.status(401).redirect('/login');
+
    const query = req.query.query;
    const sort = req.query.sort;
    const page = req.query.page || 1; 
-   let limit = 12;
+   let limit = 6;
 
    try {
        
@@ -36,6 +38,8 @@ router.get("/products", async (req, res) => {
       if(sort == 'DESC') {
          query.sort([['category', 'desc']]);
       }
+      const pages = [];
+      for(let i=0;i<data.totalPages;i++){pages.push({number:i+1})}
 
       const pageInfo = {
          products,
@@ -47,6 +51,7 @@ router.get("/products", async (req, res) => {
          nextPage: data.nextPage,
          currentPage: data.page,
          totalPages: data.totalPages,
+         pages:pages
       }
       if(req.session.login) {
          pageInfo.cart = await req.session.user.cart;
@@ -71,8 +76,9 @@ router.get("/carts/:cid", async (req, res) => {
          return res.status(404).json({ error: "Carrito no encontrado" });
       }
 
+      // Necesitas traer el producto para pasar las cosas bro
       const productosEnCarrito = carrito.products.map(item => ({
-         product: item.product.toObject(),
+         product: item._id.toString(),
          //Lo convertimos a objeto para pasar las restricciones de Exp Handlebars. 
          quantity: item.quantity
       }));

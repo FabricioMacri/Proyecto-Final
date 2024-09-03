@@ -56,7 +56,7 @@ app.get("/", (req, res) => {
  });
 
 app.use('/api', productsRouter);
-app.use("/views", viewsRouter);
+app.use("/", viewsRouter);
 app.use("/api/users", userRouter);
 app.use("/api/sessions", sessionRouter);
 app.use("/api/carts", cartsRouter);

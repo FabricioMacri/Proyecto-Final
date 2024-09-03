@@ -18,9 +18,9 @@
         <form class="row" action="/api/carts/addProduct" method="post">
         <input type="hidden" id="{{cart}}" name="cart" value="{{cart}}">
         {{#each products}}
-            <div class="col-3">
+            <div class="col-4">
                 <div class="card cardShadow" style="width: 15rem;">
-                    <img src="/img/products/Llavero_IronMan.png" class="card-img-top" alt="...">
+                    <img src={{this.thumbnail}} class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title">{{this.tittle}} </h5>
                         <br>
@@ -28,7 +28,7 @@
                         <p class="card-text text-center fw-bold">${{this.price}}</p>
                     </div>
                     <div class="row justify-content-center">
-                        <button id="{{this._id}}" name="product" value="66281a24517f65e2df9039a9" style="width: 3rem; margin: 1rem;" type="sumbit" class="btn btn-success addButton">
+                        <button id="{{this._id}}" name="product" value={{this._id}} style="width: 3rem; margin: 1rem;" type="sumbit" class="btn btn-success addButton">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-6 h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"></path>
                             </svg>
@@ -44,15 +44,18 @@
         <ul class="pagination justify-content-center">
             <li class="page-item">
                 {{#if hasPrevPage}}
-                    <a class="page-link" href="/products?page={{prevPage}}">Anterior</a>
+                    <a class="page-link" href="/views/products?page={{prevPage}}">Anterior</a>
                 {{/if}}
             </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            {{#each pages}}
+                <li class="page-item"><a class="page-link" href="/views/products?page={{this.number}}">
+                {{this.number}}
+                </a></li>
+            {{/each}}
+            
             <li class="page-item">
                 {{#if hasNextPage}}
-                    <a class="page-link" href="/products?page={{nextPage}}">Siguiente</a>
+                    <a class="page-link" href="/views/products?page={{nextPage}}">Siguiente</a>
                 {{/if}}
             </li>
         </ul>
