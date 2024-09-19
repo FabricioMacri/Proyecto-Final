@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
+const sgMail = require('@sendgrid/mail');
+
 const CartManager = require("../controllers/cartManager_db.js");
 const cartManager = new CartManager();
 const CartModel = require("../models/cart.model.js");
@@ -61,6 +63,21 @@ router.post("/:cid/purchase", async (req, res) => {
 
         if (ticket) {
             console.log("Ticket aprobado!");
+            sgMail.setApiKey(process.env.TWILIO_KEY);
+            const msg = {
+            to: req.session.user.email,
+            from: 'TICKET@emacrisolutions.com.ar',
+            subject: 'Nueva compra',
+            text: 'Felicitaciones por tu compra! Tu codigo de compra es: ' + code
+            }
+            sgMail
+            .send(msg)
+            .then(() => {
+                console.log('Email sent');
+            })
+            .catch((error) => {
+                console.log(error);
+            })
             res.redirect("/purchase");
         } else {
             console.log("Hubo problemas con el ticket ");
