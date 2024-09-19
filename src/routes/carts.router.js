@@ -40,7 +40,9 @@ router.get("/:cid", async (req, res) => {
             return res.status(404).json({ error: "Carrito no encontrado" });
         }
 
-        return res.json(carrito.products);
+        const result = carrito.toObject();
+
+        return res.json(result.products);
     } catch (error) {
         console.error("Error al obtener el carrito", error);
         res.status(500).json({ error: "Error interno del servidor" });
@@ -59,7 +61,7 @@ router.post("/:cid/purchase", async (req, res) => {
 
         if (ticket) {
             console.log("Ticket aprobado!");
-            res.redirect("/products");
+            res.redirect("/purchase");
         } else {
             console.log("Hubo problemas con el ticket ");
             res.status(400).json({mensaje : "Hubo problemas con el ticket"});

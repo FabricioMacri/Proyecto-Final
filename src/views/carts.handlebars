@@ -1,24 +1,22 @@
 <h1>Carrito de Compras</h1>
 
 <div class="row">
-
-  {{#each productos}}
-    <div class="col-sm-4">
-      <div class="card" style="margin: 1rem;">
+  {{#each products}}
+    <div class="col-4">
+      <div class="card cardShadow" style="width: 15rem;">
         <div class="card-body">
-          <h5 class="card-title">Producto: {{this.product.tittle}}</h5>
-          <p class="card-text">Categoria: {{this.product.category}}</p>
-          <p class="card-text">Precio: ${{this.product.price}}</p>
-          <p class="card-text">Cantidad: {{this.quantity}}</p>
-          <p class="card-text">Codigo de producto: {{this.product.code}} </p>
+          <h5 class="card-title">Producto: {{this.product.title}}</h5>
+          <br>
+          <p class="card-text text-muted">Codigo: {{this.product.code}}</p>
+          <p class="card-text fw-bold">Precio: ${{this.product.price}}</p>
         </div>
       </div>
     </div>
-    {{/each}}
-
+  {{/each}}
 </div>
 <form action="/api/carts/{{cart}}/purchase" method="post" style="margin-left: 1rem;">
   <label class="form-label" for="total">Total: ${{total}}</label> <br> <br>
   <button class="btn btn-success" type="submit">Realizar compra</button>
 </form>
+
 

@@ -47,13 +47,7 @@ app.set("views", "./src/views");
 
 
 // Routes
-app.get("/", (req, res) => {
-    if (req.session.login) {
-        return res.redirect("/views/home");
-    }
- 
-    res.render("home");
- });
+
 
 app.use('/api', productsRouter);
 app.use("/", viewsRouter);

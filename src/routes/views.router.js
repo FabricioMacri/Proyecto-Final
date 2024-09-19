@@ -8,13 +8,23 @@ const CartManager = require("../controllers/cartManager_db.js");
 const productManager = new ProductManager();
 const cartManager = new CartManager();
 
+router.get('/', async (req, res) => {
+
+   res.render('home');
+})
+
+router.get('/purchase', async (req, res) => {
+
+   res.render('purchase');
+})
+
 router.get('/chat', (req, res) => {
    res.render('chat');
 })
 
 router.get("/products", async (req, res) => {
 
-   if(!req.session.login) res.status(401).redirect('/login');
+   if(!req.session.login) return res.status(401).redirect('/login');
 
    const query = req.query.query;
    const sort = req.query.sort;
@@ -22,7 +32,6 @@ router.get("/products", async (req, res) => {
    let limit = 6;
 
    try {
-       
       const data = await ProductsModel.paginate({}, {limit, page});
 
       let products = data.docs.map(el => {
@@ -69,37 +78,32 @@ router.get("/carts/:cid", async (req, res) => {
    const cartId = req.params.cid;
 
    try {
-      const carrito = await cartManager.getCarritoById(cartId);
+      if(cartId == 'class="card-img-top"') return res.status(404).json({ error: "ID invalido" });
+      let carrito = await cartManager.getCarritoById(cartId);
 
       if (!carrito) {
          console.log("No existe ese carrito con el id");
          return res.status(404).json({ error: "Carrito no encontrado" });
       }
 
-      // Necesitas traer el producto para pasar las cosas bro
-      const productosEnCarrito = carrito.products.map(item => ({
-         product: item._id.toString(),
-         //Lo convertimos a objeto para pasar las restricciones de Exp Handlebars. 
-         quantity: item.quantity
-      }));
-
       let total = 0;
       carrito.products.forEach((producto) => {
 
          total += producto.product.price * producto.quantity;
       });
-
-      res.render("carts", { productos: productosEnCarrito, total : total, cart:cartId });
+      
+      carrito = carrito.toObject();
+      const info = { products:carrito.products, total:total, cart:cartId };
+      res.render("carts", info);
    } catch (error) {
       console.error("Error al obtener el carrito", error);
-      res.status(500).json({ error: "Error interno del servidor"
-       });
+      res.status(500).json({ error: "Error interno del servidor"});
    }
 });
 
 router.get("/login", (req, res) => {
    if (req.session.login) {
-       return res.redirect("/views/products");
+       return res.redirect("/products");
    }
 
    res.render("login");

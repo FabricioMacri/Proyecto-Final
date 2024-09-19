@@ -29,14 +29,20 @@ router.post("/register", async (req, res) => {
         const role = email === 'admincoder@coder.com' ? 'admin' : 'usuario';
 
         // Crear un nuevo usuario
-        const newUser = await UserModel.create({ first_name, last_name, email, password: createHash(password), age, role });
-
+        const newUser = await UserModel.create({ 
+            first_name, 
+            last_name, 
+            email, 
+            password: createHash(password), 
+            age, 
+            role 
+        });
         // Almacenar información del usuario en la sesión (puedes ajustarlo según tus necesidades)
         req.session.login = true;
         req.session.user = { ...newUser._doc };
 
         //res.status(200).send({ message: "Usuario creado con éxito" });
-        res.redirect("/allproducts");
+        res.redirect("/api/carts");
 
     } catch (error) {
         console.error("Error al crear el usuario:", error);
