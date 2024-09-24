@@ -35,14 +35,21 @@ router.get("/:cid", async (req, res) => {
     const cartId = req.params.cid;
 
     try {
-        const carrito = await CartModel.findById(cartId)
+        const carrito = await CartModel.findById(cartId);
+
+        let result = {
+            products: []
+        };
             
         if (!carrito) {
-            console.log("No existe ese carrito con el id");
-            return res.status(404).json({ error: "Carrito no encontrado" });
+            const nuevoCarrito = await cartManager.crearCarrito();
+            const cartID = await cartManager.asignarCarrito(nuevoCarrito._id, req.session.user.email);
+            req.session.user.cart = await cartID.toString();
+            let result = nuevoCarrito.toObject();
         }
-
-        const result = carrito.toObject();
+        else {
+            let result = carrito.toObject();
+        }
 
         return res.json(result.products);
     } catch (error) {
@@ -62,6 +69,7 @@ router.post("/:cid/purchase", async (req, res) => {
         const ticket = await ticketManager.addTicket( code, req.session.user.email, cartId);
 
         if (ticket) {
+            const cart = await cartManager.deleteCarrito(req.session.user.email, cartId);
             console.log("Ticket aprobado!");
             sgMail.setApiKey(process.env.TWILIO_KEY);
             const msg = {

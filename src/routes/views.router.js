@@ -82,8 +82,9 @@ router.get("/carts/:cid", async (req, res) => {
       let carrito = await cartManager.getCarritoById(cartId);
 
       if (!carrito) {
-         console.log("No existe ese carrito con el id");
-         return res.status(404).json({ error: "Carrito no encontrado" });
+         carrito = await cartManager.crearCarrito();
+         const cartID = await cartManager.asignarCarrito(carrito._id, req.session.user.email);
+         req.session.user.cart = await cartID.toString();
       }
 
       let total = 0;

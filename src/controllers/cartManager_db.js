@@ -179,6 +179,28 @@ class CartManager {
         }
     }
 
+    async deleteCarrito(email, cartId) {
+          
+        try {
+
+            const deleteado = await CartModel.findByIdAndDelete(cartId);
+
+            await UserModel.updateOne(
+                { email: email },
+                { $unset: { cart: "" } } 
+            );
+
+            if (!deleteado) {
+                console.log("No se pudo encontrar el carrito");
+                return null;
+            }
+
+        } catch (error) {
+            console.log("Error al eliminar el carrito", error);
+            throw error;
+        }
+    }
+
 }
 
 module.exports = CartManager; 
